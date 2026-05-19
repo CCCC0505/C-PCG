@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movie-demo</title>
+<link rel="stylesheet" href="./index.css">
+</head>
+<body>
+  <main class="intro-screen">
+    <div class="cloud cloud-left cloud-far" aria-hidden="true"></div>
+    <div class="cloud cloud-left cloud-veil" aria-hidden="true"></div>
+    <div class="cloud cloud-left cloud-upper" aria-hidden="true"></div>
+    <div class="cloud cloud-left cloud-main" id="cloudLeft" aria-hidden="true"></div>
+    <div class="cloud cloud-left cloud-lower" aria-hidden="true"></div>
+    <div class="cloud cloud-left cloud-wisp" aria-hidden="true"></div>
+
+    <div class="cloud cloud-right cloud-far" aria-hidden="true"></div>
+    <div class="cloud cloud-right cloud-veil" aria-hidden="true"></div>
+    <div class="cloud cloud-right cloud-upper" aria-hidden="true"></div>
+    <div class="cloud cloud-right cloud-main" id="cloudRight" aria-hidden="true"></div>
+    <div class="cloud cloud-right cloud-lower" aria-hidden="true"></div>
+    <div class="cloud cloud-right cloud-wisp" aria-hidden="true"></div>
+
+    <div class="cloud cloud-center cloud-center-back" aria-hidden="true"></div>
+    <div class="cloud cloud-center cloud-center-front" aria-hidden="true"></div>
+
+    <div class="mark-stage" aria-label="Intro mark">
+      <span class="intro-mark" id="introMark">a</span>
+    </div>
+
+    <section class="portal-shell" id="portalShell" aria-label="Portal frame">
+      <article class="window-shell">
+        <header class="window-topbar">
+          <div class="traffic-lights" aria-hidden="true">
+            <span class="light red"></span>
+            <span class="light amber"></span>
+            <span class="light green"></span>
+          </div>
+          <div class="window-title">风灵月影-demo（请使用电脑进行浏览，移动端暂未做适配）</div>
+          <div class="window-spacer" aria-hidden="true"></div>
+        </header>
+
+        <nav class="window-tabs" aria-label="Sections">
+          <button class="window-tab active" type="button" data-tab="movies">Movies</button>
+          <button class="window-tab" type="button" data-tab="functions">Functions</button>
+          <button class="window-tab" type="button" data-tab="contact">Contact</button>
+        </nav>
+
+        <div class="window-body">
+          <div class="window-content" id="windowContent"></div>
+          <section class="player-layer" id="playerLayer" aria-hidden="true">
+            <div class="player-backdrop"></div>
+
+            <div class="player-scene" id="playerScene">
+              <section class="player-intro" id="playerIntro" aria-hidden="true">
+                <div class="player-intro-grid"></div>
+                <video class="player-intro-video" id="playerIntroVideo" muted playsinline preload="metadata"></video>
+                <div class="player-intro-halo"></div>
+                <div class="player-intro-copy">
+                  <span class="player-intro-kicker">F1 demo sequence</span>
+                  <h3 class="player-intro-title">Track. Velocity. Impact.</h3>
+                  <p class="player-intro-text">Poster lift-off into a dedicated player state.</p>
+                </div>
+                <div class="player-intro-progress">
+                  <span class="player-intro-progress-fill"></span>
+                </div>
+              </section>
+
+              <section class="player-stage" id="playerStage" aria-hidden="true">
+                <div class="player-theme-media" id="playerThemeMedia" aria-hidden="true"></div>
+                <header class="player-head">
+                  <div class="player-head-copy">
+                    <small class="player-kicker">Cinema demo</small>
+                    <h3 class="player-title" id="playerTitle">F1 Demo</h3>
+                    <p class="player-meta" id="playerMeta">这里是视频播放区，这是当前测试视频，交互功能需要点击右上角Functions</p>
+                  </div>
+                  <div class="player-head-actions">
+                    <button class="player-chip" id="playerFunctionsToggle" type="button" aria-controls="playerFunctionsPanel" aria-expanded="false">Functions</button>
+                    <button class="player-chip" id="playerInfoToggle" type="button" aria-controls="playerInfoPanel" aria-expanded="false">Info</button>
+                    <button class="player-close" id="playerClose" type="button">Back</button>
+                  </div>
+                </header>
+
+                <div class="player-main" id="playerMain">
+                  <div class="player-cinema" id="playerCinema">
+                    <div class="player-screen">
+                      <video class="player-video" id="playerVideo" playsinline preload="metadata"></video>
+                      <div class="story-reply-selection-surface" id="storyReplySelectionSurface" aria-hidden="true">
+                        <div class="story-reply-selection-hint" id="storyReplySelectionHint">暂停后可在这里拖拽框选海报范围与主体</div>
+                        <div class="story-reply-selection-box" id="storyReplySelectionBox" aria-hidden="true"></div>
+                      </div>
+                    </div>
+
+                    <footer class="player-foot" id="playerFoot">
+                      <div class="player-controlbar">
+                        <button class="player-control player-control-strong" id="playerPlayToggle" type="button">Play</button>
+                        <button class="player-control" id="playerMuteToggle" type="button">Mute</button>
+                        <span class="player-control-time" id="playerCurrentTime">00:00</span>
+                        <label class="player-control-track">
+                          <input class="player-seek" id="playerSeek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek video">
+                        </label>
+                        <span class="player-control-time" id="playerDurationTime">00:00</span>
+                        <button class="player-control player-function-btn" data-player-action="restart" type="button">Restart</button>
+                        <button class="player-control player-function-btn" data-player-action="backward-10" type="button">Back 10s</button>
+                        <button class="player-control player-function-btn" data-player-action="forward-10" type="button">Forward 10s</button>
+                        <button class="player-control player-function-btn" data-player-action="speed-cycle" type="button">Speed 1x</button>
+                        <button class="player-control player-function-btn" data-player-action="fullscreen" type="button">Fullscreen</button>
+                      </div>
+                    </footer>
+                  </div>
+
+                  <aside class="player-side" id="playerFunctionsPanel" aria-hidden="true">
+                    <div class="player-side-card player-functions-suite">
+                      <section class="player-functions-view is-active" id="playerFunctionsHome">
+                        <div class="player-functions-suite-topbar">
+                          <div class="player-functions-suite-head">
+                            <span class="player-side-label">Integrated Panel</span>
+                            <strong>Functions</strong>
+                            <p>这里作为统一的功能集成区，点击下方功能卡即可进入对应功能的详情页。</p>
+                          </div>
+                        </div>
+                        <button class="player-functions-active player-functions-entry" id="storyReplyEntry" type="button">
+                          <h4 class="player-functions-entry-title">海报生成器</h4>
+                          <div class="player-feature-pills player-functions-entry-tips">
+                            <span class="player-feature-pill">暂停取帧</span>
+                            <span class="player-feature-pill">框选主体</span>
+                            <span class="player-feature-pill">海报生成</span>
+                          </div>
+                        </button>
+                        <div class="player-function-slots">
+                          <button class="player-functions-active player-functions-entry" id="worldFateEntry" type="button">
+                            <h4 class="player-functions-entry-title">越狱观众（导演时刻）</h4>
+                            <div class="player-feature-pills player-functions-entry-tips">
+                              <span class="player-feature-pill">境外空间</span>
+                              <span class="player-feature-pill">物体记忆</span>
+                              <span class="player-feature-pill">导演剪辑</span>
+                            </div>
+                          </button>
+                          <button class="player-functions-active player-functions-entry" id="eventRelationEntry" type="button">
+                            <h4 class="player-functions-entry-title">AI关系因果台</h4>
+                            <div class="player-feature-pills player-functions-entry-tips">
+                              <span class="player-feature-pill">关系变化</span>
+                              <span class="player-feature-pill">事件触发/阻断</span>
+                              <span class="player-feature-pill">局部视频改写</span>
+                            </div>
+                          </button>
+                        </div>
+                      </section>
+
+                      <section class="player-functions-view" id="playerFunctionsStoryDetail">
+                        <div class="player-functions-detail-head">
+                          <div class="player-functions-detail-copy">
+                            <span class="player-side-label">Feature 01 / Poster Generator</span>
+                            <strong>海报生成器</strong>
+                          </div>
+                          <div class="player-functions-detail-tools">
+                            <button class="module-model-trigger" id="storyReplyModelToggle" type="button">图片模型</button>
+                            <button class="player-functions-back" id="storyReplyBack" type="button">Back</button>
+                          </div>
+                        </div>
+                        <div class="module-model-drawer" id="storyReplyModelDrawer" aria-hidden="true">
+                          <span class="module-model-drawer-label">当前图片模型</span>
+                          <div class="module-model-options">
+                            <button class="module-model-option is-active" type="button" data-story-model="wan2.7">wan2.7</button>
+                            <button class="module-model-option" type="button" data-story-model="gpt-image-2">gpt-image-2</button>
+                          </div>
+                        </div>
+                        <p class="player-functions-detail-text">暂停当前帧后，可直接在左侧视频画面上拖拽框选海报生成的范围与主体。当前功能只保留海报生成，提示词也只服务于海报生成。</p>
+                        <div class="story-reply-status" id="storyReplyStatus">请先暂停一个画面，然后在左侧视频区域拖拽框选海报范围。</div>
+                        <div class="story-reply-selection-meta">
+                          <div class="story-reply-selection-summary" id="storyReplySelectionSummary">当前未框选海报范围。暂停后可在左侧视频画面直接拖拽。</div>
+                          <button class="story-reply-selection-button is-secondary" id="storyReplySelectionClear" type="button">清除框选</button>
+                        </div>
+                        <label class="story-reply-prompt-label" for="storyReplyPrompt">海报提示词</label>
+                        <textarea class="story-reply-prompt" id="storyReplyPrompt" placeholder="例如：保留洗衣房纵深透视，让人物落在画面右侧三分之一位置，整体做成冷色电影海报。"></textarea>
+                        <button class="story-reply-generate" id="storyReplyGenerate" type="button">生成海报</button>
+                        <div class="story-reply-note">当前只保留海报生成功能。暂停视频后，可在左侧画面拖拽框选，提示词只用于补充海报构图、气质和视觉方向。</div>
+                        <div class="story-reply-result" id="storyReplyResult">
+                          <div class="story-reply-empty">这里会显示暂停帧、框选范围、海报提示词，以及最终生成的海报结果。</div>
+                        </div>
+                      </section>
+
+                    </div>
+                  </aside>
+
+                  <section class="player-module-workspace" id="worldFateWorkspace" aria-hidden="true">
+                    <div class="world-fate-shell">
+                      <div class="world-fate-topbar">
+                        <div class="world-fate-head">
+                          <span class="player-side-label">Feature 02 / Director's Moment</span>
+                          <h3 class="world-fate-title">越狱观众（导演时刻）</h3>
+                          <p class="world-fate-description">在这里播放《看不见的客人》切片；暂停任意画面生成可探索空间，框选物体读取它的记忆，再把线索送入导演台。</p>
+                          <div class="player-feature-pills world-fate-tips">
+                            <span class="player-feature-pill">电影播放</span>
+                            <span class="player-feature-pill">境外空间</span>
+                            <span class="player-feature-pill">物体记忆</span>
+                            <span class="player-feature-pill">导演剪辑</span>
+                          </div>
+                        </div>
+                        <button class="player-functions-back world-fate-back" id="worldFateBack" type="button">Back</button>
+                      </div>
+
+                      <section class="world-fate-feature-player" aria-label="看不见的客人播放窗口">
+                        <div class="world-fate-feature-copy">
+                          <span class="world-fate-console-kicker">Feature Film / 看不见的客人</span>
+                          <strong>导演时刻播放窗口</strong>
+                          <p>暂停此窗口中的画面后，下方“生成空间”和“线索获取”都会以当前电影时间为准。</p>
+                        </div>
+                        <div class="world-fate-feature-video-shell">
+                          <video class="world-fate-feature-video" id="worldFateFeatureVideo" controls playsinline preload="metadata"></video>
+                        </div>
+                      </section>
+
+                      <div class="world-fate-worlds world-fate-stage-rail" id="worldFateWorlds"></div>
+
+                      <div class="world-fate-explorer-shell">
+                        <section class="world-fate-space-shell">
+                          <div class="world-fate-space-head">
+                            <div class="world-fate-console-copy">
+                              <span class="world-fate-console-kicker">Stage 01 / 境外空间</span>
+                              <p class="world-fate-console-note">先基于上方电影窗口的暂停帧生成一张可探索空间图。第一版支持拖动画面浏览、上传替换空间图，以及框选物体建立线索。</p>
+                            </div>
+                            <div class="world-fate-space-actions">
+                              <label class="world-fate-upload-button">
+                                上传空间图
+                                <input id="worldFateUploadInput" type="file" accept="image/*">
+                              </label>
+                              <button class="world-fate-submit is-secondary" id="worldFateGenerateSpace" type="button">生成空间</button>
+                              <button class="world-fate-submit is-secondary" id="worldFateResetSpace" type="button">重置视角</button>
+                            </div>
+                          </div>
+                          <div class="module-model-drawer" id="worldFateModelDrawer" aria-hidden="true">
+                            <span class="module-model-drawer-label">当前图片模型</span>
+                            <div class="module-model-options">
+                              <button class="module-model-option is-active" type="button" data-world-fate-model="wan2.7">wan2.7</button>
+                              <button class="module-model-option" type="button" data-world-fate-model="gpt-image-2">gpt-image-2</button>
+                            </div>
+                          </div>
+                          <div class="world-fate-space-status" id="worldFateSpaceStatus">请先暂停当前画面，再生成境外空间。后续你也可以直接上传自己的全景图来替换探索画面。</div>
+                          <div class="world-fate-space-toolbar">
+                            <button class="world-fate-space-mode is-active" id="worldFateBrowseMode" type="button">浏览视角</button>
+                            <button class="world-fate-space-mode" id="worldFateSelectMode" type="button">框选物体</button>
+                            <button class="world-fate-submit is-secondary" id="worldFateReadMemory" type="button">线索获取</button>
+                            <button class="world-fate-submit is-secondary" id="worldFateClearSelection" type="button">清除选择</button>
+                            <button class="module-model-trigger" id="worldFateModelToggle" type="button">图片模型</button>
+                          </div>
+                          <div class="world-fate-space-viewport" id="worldFateSpaceViewport">
+                            <div class="world-fate-space-stage" id="worldFateSpaceStage">
+                              <canvas class="world-fate-space-canvas" id="worldFateSpaceCanvas" aria-label="境外空间全景查看器"></canvas>
+                              <img class="world-fate-space-image" id="worldFateSpaceImage" alt="境外空间探索图">
+                              <div class="world-fate-space-hotspots" id="worldFateSpaceHotspots"></div>
+                              <div class="world-fate-space-selection" id="worldFateSpaceSelection" aria-hidden="true"></div>
+                              <div class="world-fate-space-hint" id="worldFateSpaceHint">当前还没有空间图。暂停视频后可生成，或者先上传你准备好的全景图。</div>
+                            </div>
+                          </div>
+                        </section>
+
+                        <aside class="world-fate-memory-shell">
+                          <section class="world-fate-memory-card-shell">
+                            <div class="world-fate-memory-head">
+                              <span class="world-fate-console-kicker">Stage 02 / 物体记忆</span>
+                              <strong>记忆卡</strong>
+                            </div>
+                            <div class="world-fate-memory-card" id="worldFateMemoryCard">
+                              <div class="world-fate-memory-placeholder">框选一个物体后，这里会返回它的记忆、剧情关联、相关角色与导演意义。</div>
+                            </div>
+                          </section>
+
+                          <section class="world-fate-clue-shell">
+                            <div class="world-fate-memory-head">
+                              <span class="world-fate-console-kicker">Clue Basket</span>
+                              <strong>线索篮</strong>
+                            </div>
+                            <div class="world-fate-clue-basket" id="worldFateClueBasket">
+                              <div class="world-fate-memory-placeholder">还没有加入导演台的线索。先从空间里获取 1 到 3 个关键物体线索。</div>
+                            </div>
+                          </section>
+                        </aside>
+                      </div>
+
+                      <div class="world-fate-console">
+                        <div class="world-fate-console-head">
+                          <div class="world-fate-console-copy">
+                            <span class="world-fate-console-kicker">Stage 03 / 导演剪辑</span>
+                            <p class="world-fate-console-note">从线索篮中挑选 1 到 3 条线索，写下你的导演意图。系统会先判断这些线索能否推动原剧情继续成立；如果线索成立，就顺着原剧情往后编写；如果线索不足或方向偏离，再在下方节点里给出文字编写结果。</p>
+                          </div>
+                        </div>
+                        <div class="world-fate-console-body">
+                          <div class="world-fate-clue-summary" id="worldFateClueSummary">当前还没有导演线索。先去境外空间获取线索，再加入导演台。</div>
+                          <label class="world-fate-console-label" for="worldFatePrompt">导演意图</label>
+                          <textarea class="world-fate-console-input" id="worldFatePrompt" placeholder="例如：如果我是导演，我会让观众先意识到这个客厅其实藏着更早的心理战痕迹，然后把后面的对话推成一场逐层揭露的审讯。"></textarea>
+                          <div class="world-fate-console-actions">
+                            <div class="world-fate-console-status" id="worldFateStatus">先生成空间、收集线索，再进入导演剪辑。节点画布保留为后续编辑视图，不再是第一步入口。</div>
+                            <div class="world-fate-console-buttons">
+                              <button class="world-fate-submit" id="worldFateSubmit" type="button">线索推动剧情</button>
+                              <button class="world-fate-submit is-secondary" id="worldFateConfirmPlot" type="button">关键首尾帧</button>
+                              <button class="world-fate-submit is-secondary" id="worldFateConfirmFrames" type="button">视频片段</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="world-fate-canvas-shell">
+                        <div class="world-fate-canvas-head">
+                          <span class="world-fate-canvas-kicker">Stage 04 / 导演剪辑画布</span>
+                          <p class="world-fate-canvas-note">这里保留你现在的节点画布能力，但它已经降级为导演阶段的编辑视图。系统会先根据线索和导演意图生成节点，再在这里继续拖动、确认首尾帧和提交视频。</p>
+                        </div>
+                        <div class="world-fate-canvas" id="worldFateCanvas"></div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="player-module-workspace event-relation-workspace" id="eventRelationWorkspace" aria-hidden="true">
+                    <div class="world-fate-shell event-relation-shell">
+                      <div class="world-fate-topbar">
+                        <div class="world-fate-head">
+                          <span class="player-side-label">Feature 03 / Relationship Causality</span>
+                          <h3 class="world-fate-title">AI关系因果台</h3>
+                          <p class="world-fate-description">在关键帧进入人物关系：先生成主角与短线角色的关系图谱，用户调整一条关系边，AI 再推演会触发或阻断哪些小事件，并生成不破坏主线的局部视频改写。</p>
+                          <div class="player-feature-pills world-fate-tips">
+                            <span class="player-feature-pill">电影播放</span>
+                            <span class="player-feature-pill">关系变化</span>
+                            <span class="player-feature-pill">事件触发/阻断</span>
+                            <span class="player-feature-pill">局部视频改写</span>
+                          </div>
+                        </div>
+                        <button class="player-functions-back world-fate-back" id="eventRelationBack" type="button">Back</button>
+                      </div>
+
+                      <section class="world-fate-feature-player event-relation-feature-player" aria-label="AI关系因果台播放窗口">
+                        <div class="world-fate-feature-copy">
+                          <span class="world-fate-console-kicker">Feature Film / Relationship Seed</span>
+                          <strong>关系因果播放窗口</strong>
+                          <p>暂停关键帧后进入关系图谱。用户先改一条短线关系，视频窗口再弹出由 AI 推演出的事件选项，最后回写到局部镜头。</p>
+                        </div>
+                        <div class="world-fate-feature-video-shell">
+                          <video class="world-fate-feature-video" id="eventRelationFeatureVideo" controls playsinline preload="metadata"></video>
+                          <div class="event-relation-cue-layer" id="eventRelationCueLayer" aria-live="polite"></div>
+                        </div>
+                      </section>
+
+                      <div class="world-fate-worlds world-fate-stage-rail event-relation-stage-rail" id="eventRelationStages"></div>
+
+                      <div class="world-fate-explorer-shell event-relation-explorer-shell">
+                        <section class="world-fate-space-shell event-relation-graph-shell">
+                          <div class="world-fate-space-head">
+                            <div class="world-fate-console-copy">
+                              <span class="world-fate-console-kicker">Stage 01 / 关系图谱</span>
+                              <p class="world-fate-console-note">图谱只聚焦主角与短线角色。点击关系边后，可以把“陌生、怀疑、信任、共谋”等状态改写为新的局部因果起点。</p>
+                            </div>
+                            <div class="world-fate-space-actions event-relation-controls">
+                              <button class="world-fate-submit" id="eventRelationGenerateGraph" type="button">生成关系图谱</button>
+                              <button class="world-fate-submit is-secondary" id="eventRelationReset" type="button">重置因果链</button>
+                            </div>
+                          </div>
+                          <div class="world-fate-space-status event-relation-status" id="eventRelationStatus">请先暂停上方视频，再生成角色关系图谱。</div>
+                          <div class="event-relation-frame-insight" id="eventRelationFrameInsight">
+                            <div class="world-fate-memory-placeholder">暂停视频后，这里会显示 AI 对当前帧的理解：主角、短线角色、当前关系、以及主线约束。</div>
+                          </div>
+                          <div class="event-relation-graph" id="eventRelationGraph" aria-label="事件关系图谱">
+                            <div class="event-relation-graph-empty">关系图谱等待生成。先暂停视频并点击“生成关系图谱”。</div>
+                          </div>
+                        </section>
+
+                        <aside class="world-fate-memory-shell event-relation-side-shell">
+                          <section class="world-fate-memory-card-shell">
+                            <div class="world-fate-memory-head">
+                              <span class="world-fate-console-kicker">Stage 02 / 事件触发系统</span>
+                              <strong>触发/阻断选项</strong>
+                            </div>
+                            <div class="event-relation-panel" id="eventRelationOptions">
+                              <div class="world-fate-memory-placeholder">先生成关系图谱。之后上方视频会出现可选事件，这里只同步显示事件说明和当前选择。</div>
+                            </div>
+                          </section>
+
+                          <section class="world-fate-clue-shell">
+                            <div class="world-fate-memory-head">
+                              <span class="world-fate-console-kicker">Stage 03 / 关系回写</span>
+                              <strong>关系变化与后果</strong>
+                            </div>
+                            <div class="event-relation-panel" id="eventRelationLedger">
+                              <div class="world-fate-memory-placeholder">事件改变关系后，这里会显示这条新关系会触发什么、阻断什么，以及为什么会影响后续片段。</div>
+                            </div>
+                          </section>
+                        </aside>
+                      </div>
+
+                      <div class="world-fate-console event-relation-console">
+                        <div class="world-fate-console-head">
+                          <div class="world-fate-console-copy">
+                            <span class="world-fate-console-kicker">Stage 04 / 局部视频改写</span>
+                            <p class="world-fate-console-note">关系变化不会推翻主线，只作用到短线角色再次出现的镜头。这里显示触发/阻断解释、首尾帧方案和局部视频补丁。</p>
+                          </div>
+                        </div>
+                        <div class="world-fate-console-body">
+                          <div class="event-relation-result" id="eventRelationResult">
+                            <div class="world-fate-memory-placeholder">还没有后续镜头微补丁。请选择一个 AI 事件后，系统会自动推演。</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="world-fate-modal" id="worldFateCustomModal" aria-hidden="true">
+                    <div class="world-fate-modal-backdrop" id="worldFateCustomModalBackdrop"></div>
+                    <div class="world-fate-modal-card" role="dialog" aria-modal="true" aria-labelledby="worldFateCustomTitle">
+                      <div class="world-fate-modal-head">
+                        <div>
+                          <span class="player-side-label">Custom World Input</span>
+                          <h4 class="world-fate-modal-title" id="worldFateCustomTitle">自定义世界观</h4>
+                        </div>
+                        <button class="player-functions-back world-fate-modal-close" id="worldFateCustomCancel" type="button">Close</button>
+                      </div>
+                      <p class="world-fate-modal-text">输入你想改变的世界观。确认后，下面的剧情节点会基于原剧情与该世界观进行逻辑同步修改。</p>
+                      <label class="world-fate-console-label" for="worldFateCustomInput">世界观设定</label>
+                      <textarea class="world-fate-console-input world-fate-modal-input" id="worldFateCustomInput" placeholder="例如：让 APXGP 所处的世界更强调车队内部政治博弈，同时保留 F1 的现实规则与赛道因果。"></textarea>
+                      <div class="world-fate-modal-actions">
+                        <div class="world-fate-console-status" id="worldFateCustomStatus">输入完成后点击确认，即会把这一世界观作用到下方剧情节点。</div>
+                        <button class="world-fate-submit" id="worldFateCustomConfirm" type="button">确认世界观</button>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="player-info-panel" id="playerInfoPanel" aria-hidden="true">
+                    <div class="player-info-backdrop" id="playerInfoBackdrop"></div>
+                    <div class="player-info-card" role="dialog" aria-modal="false" aria-labelledby="playerInfoTitle">
+                      <button class="player-info-close" id="playerInfoClose" type="button">Close</button>
+                      <div class="player-info-preview" id="playerInfoPreview"></div>
+                      <div class="player-info-copy">
+                        <span class="player-side-label" id="playerInfoLabel">Demo / Intro</span>
+                        <h4 class="player-info-title" id="playerInfoTitle">Demo 演示介绍</h4>
+                        <p class="player-info-meta" id="playerInfoMeta"></p>
+                        <div class="player-info-facts" id="playerInfoFacts"></div>
+                        <p class="player-info-text" id="playerInfoText"></p>
+                        <p class="player-info-detail" id="playerInfoDetail"></p>
+                        <div class="player-info-credits" id="playerInfoCredits"></div>
+                        <div class="player-info-tags" id="playerInfoTags"></div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </section>
+            </div>
+          </section>
+        </div>
+
+        <footer class="window-status">
+          <span class="status-left"><i class="status-dot"></i>Ready <span class="backend-status" id="backendStatus" data-state="checking">Backend checking</span></span>
+          <span class="status-right" id="statusLabel">Movies</span>
+        </footer>
+      </article>
+    </section>
+  </main>
+
+  <script src="./index.js"></script>
+</body>
+</html>

@@ -1,0 +1,2 @@
+class ProviderRequestError(RuntimeError):
+    pass
